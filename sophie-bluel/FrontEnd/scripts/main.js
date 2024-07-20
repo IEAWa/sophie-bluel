@@ -5,10 +5,12 @@ const works = await response.json();
 //import functions
 import { introduction } from "./intro.js";
 import { generateWorks } from "./portfolio.js";
+import { generatePortfolio } from "./portfolio.js";
 import { contact } from "./contact.js";
+
 
 //call the function
 introduction();
-generateWorks();
+generateWorks(works);
 contact();
 
