@@ -51,7 +51,7 @@ function generateConnection() {
 
 function loginAuth(){
     form.addEventListener('submit', (event) => {
-        event.preventDefault() ;
+        event.preventDefault();
         //Verification des elemets du formulaires
         // récuperer les données tapées par user
             const email = document.getElementById('email').value;
@@ -65,25 +65,25 @@ function loginAuth(){
             body: formData,
             headers: {"Content-Type": "application/json"},
         })
+        //token?
         .then(response => response.json())
-            .then((data) => {
+        .then((data) => {
+            console.log(data);
+
+            if(data.hasOwnProperty('userId') && data.hasOwnProperty('token') ) {
                 console.log(data);
-
-                if(data.hasOwnProperty('userId') && data.hasOwnProperty('token') ) {
-                    console.log(data);
-                    //créer le localStorage
-                    window.localStorage.setItem('userData', JSON.stringify(data));
-                    //rediriger user vers la page accueil
-                    window.location = "./index_edit.html";
-                }
-
-                else {
-                    console.log('user not found');
-                    const incorrectEntry = document.getElementById('incorrectEntry');
-                    incorrectEntry.removeAttribute('style');
-                    //créer style pour afficher msg error
-                }
+                //créer le localStorage
+                window.localStorage.setItem('userData', JSON.stringify(data));
+                //rediriger user vers la page accueil
+                window.location = "./index_edit.html";
             }
+
+            else {
+                console.log('user not found');
+                const incorrectEntry = document.getElementById('incorrectEntry');
+                incorrectEntry.removeAttribute('style');
+            }
+        }
         )
         }      
     )}

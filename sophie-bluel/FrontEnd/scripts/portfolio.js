@@ -5,15 +5,17 @@ const works = await response.json();
 const main = document.querySelector('main')
 const portfolioSection = document.createElement('section');
 portfolioSection.setAttribute('id','portfolio');
-const portfolioTitle = document.createElement('h2');
-portfolioTitle.innerHTML = "Mes Projets";
-const filterButtons = document.createElement('div');
-filterButtons.classList.add('filterButtons');
+
+const portfolioTitle = document.createElement('div');
+portfolioTitle.classList.add('center-alignment');
+portfolioTitle.innerHTML = `<h2>Mes Projets</h2>`;
+portfolioSection.appendChild(portfolioTitle);
+
+
+const filterBar = document.createElement('div');
+filterBar.classList.add('filterButtons');
 const portfolioGallery = document.createElement('div');
 portfolioGallery.classList.add('gallery');
-
-//création bouton modifier pour la fenêtre modale
-const modalButton = document.querySelector('main a');
 
 
 //création barre de boutons des filtres
@@ -31,10 +33,10 @@ buttonHotel.innerHTML = "Hotels & restaurants";
 buttonHotel.classList.add('filterBtn','filterBtn:hover');
 main.appendChild(portfolioSection);
 portfolioSection.appendChild(portfolioTitle);
-filterButtons.appendChild(buttonALL);
-filterButtons.appendChild(buttonObject);
-filterButtons.appendChild(buttonApartment);
-filterButtons.appendChild(buttonHotel);
+filterBar.appendChild(buttonALL);
+filterBar.appendChild(buttonObject);
+filterBar.appendChild(buttonApartment);
+filterBar.appendChild(buttonHotel);
 
 //création du contenu du portfolio
 export function generateWorks(works){
@@ -50,7 +52,7 @@ figCaption.innerHTML = works[i].title;
 
 main.appendChild(portfolioSection);
 portfolioSection.appendChild(portfolioTitle);
-portfolioSection.appendChild(filterButtons);
+portfolioSection.appendChild(filterBar);
 portfolioSection.appendChild(portfolioGallery);
 portfolioGallery.appendChild(figure);
 figure.appendChild(figImage);
@@ -58,8 +60,11 @@ figure.appendChild(figCaption);
 };}
 
 
-export function generatePortfolio(){
+export function generatePortfolio(works){
 
+generateWorks(works)
+
+    const filterButtons = document.querySelector('.filterBtn')
     filterButtons.forEach( button => {
        button.addEventListener('click' , () => {
            let filterTerm = button.textContent.trim();
