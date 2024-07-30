@@ -53,7 +53,7 @@ function loginAuth(){
     form.addEventListener('submit', (event) => {
         event.preventDefault();
         //Verification des elemets du formulaires
-        // récuperer les données tapées par user
+        // récuperer les données tapées par l'user
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
         //transformation en format json
@@ -65,17 +65,16 @@ function loginAuth(){
             body: formData,
             headers: {"Content-Type": "application/json"},
         })
-        //token?
+        //
         .then(response => response.json())
         .then((data) => {
-            console.log(data);
 
             if(data.hasOwnProperty('userId') && data.hasOwnProperty('token') ) {
                 console.log(data);
                 //créer le localStorage
                 window.localStorage.setItem('userData', JSON.stringify(data));
                 //rediriger user vers la page accueil
-                window.location = "./index_edit.html";
+                window.location = "./index.html";
             }
 
             else {

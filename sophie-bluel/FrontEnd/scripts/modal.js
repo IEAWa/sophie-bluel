@@ -1,3 +1,8 @@
+//récuperer le token
+let token;
+if (window.localStorage.getItem('userData')) {
+    token = JSON.parse(window.localStorage.getItem("userData")).token;
+}
 const response = await fetch('http://localhost:5678/api/works');
 const works = await response.json();
 
@@ -50,29 +55,36 @@ for (let i = 0; i < works.length; i++) {
     //icone pour supprimer les photos
     let deleteIcon = document.createElement('i');
     deleteIcon.setAttribute('class','fa-solid fa-trash-can');
+    deleteIcon.classList.add('cursor');
     figure.appendChild(deleteIcon)
 }
 
-let deleteIcon = document.querySelector('.fa-solid fa-trash-can')
+let deleteIcon = document.querySelector('.fa-trash-can')
+    
+
 //supprimer photos
 deleteIcon.addEventListener('click', function (event) {
     event.preventDefault();
     //manque qqlchose ici
-    let worksID = works[i].id;
-    fetch('http://localhost:5678/api/works/`${worksID}`', {
+    let workID = works[i].id; 
+    fetch('http://localhost:5678/api/works/${workID}', {
         method: "DELETE",
-        body: formData,
-        headers: {"Content-Type": "application/json"},
-    })
+        headers: {"Content-Type": "application/json",
+                "accept": "*/*",
+                "Authorization": `Bearer ${token}`
+              }
+        },
+    )
+    .then(response => response.json())
 })
 
 //bouton-lien 'ajouter une photo' (mène à la modale 'ajout photo')
-const addPhotoBtn = document.createElement('div');
-addPhotoBtn.innerHTML = `<hr>
+const addPhotoSection = document.createElement('div');
+addPhotoSection.innerHTML = `<hr>
 		<a href="" class="modalBtn">
 			Ajouter une photo
 		</a>`;
-modalContainer.appendChild(addPhotoBtn);
+modalContainer.appendChild(addPhotoSection);
 
 //modale 'ajout photo'
 const openModal2 = function (event) {
@@ -85,6 +97,7 @@ const openModal2 = function (event) {
 }
 
 //ouverture de la modale 'ajout photo' avec le clique sur le btn
+let addPhotoBtn = document.querySelector('.modalBtn');
 addPhotoBtn.addEventListener('click', function () {
     openModal2()
 })

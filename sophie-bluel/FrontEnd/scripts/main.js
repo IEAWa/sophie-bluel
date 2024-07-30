@@ -4,6 +4,7 @@ const works = await response.json();
 
 //import functions
 import { introduction } from "./intro.js";
+import {indexEdit} from "./edit_index.js";
 import { generateWorks } from "./portfolio.js";
 import { contact } from "./contact.js";
 
@@ -12,12 +13,4 @@ import { contact } from "./contact.js";
 introduction();
 generateWorks(works);
 contact();
-
-let userLoginInfo = window.localStorage.getItem('userData');
-console.log(userLoginInfo)
-
-if (userLoginInfo !== null){
-  const filterBar = document.querySelector('.filterButtons');
-  filterBar.style.display='none';
-
-}
+indexEdit();

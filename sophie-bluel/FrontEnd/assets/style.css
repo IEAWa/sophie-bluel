@@ -238,7 +238,6 @@ a {
 	font-size: 15px;
 	padding: 20px 0 0 5px;
 	color: rgb(176, 20, 20);
-
 }
 
 /*header en mode édition*/
@@ -255,6 +254,7 @@ a {
 .edit-page-header p {
 	padding-left: 10px;
 }
+/*div qui contient le titre & btn 'modifier' de la section portfolio*/
 
 /*bouton modifier les travaux*/
 .js-modal {
@@ -262,7 +262,7 @@ a {
 }
 
 
-/*style de la fenetre modale*/
+/****** style de la fenetre modale ******/
 .modal {
 	position: fixed;
 	display: flex;
@@ -323,7 +323,6 @@ hr {
 }
 
 /*Photos de la fêntre modale*/
-
 .img-container {
 	margin: 40px;
 	display: flex;
@@ -348,4 +347,8 @@ hr {
 	color: white;
 	padding: 3px;
 	margin-right: 20px;
+}
+
+.cursor {
+	cursor: pointer;
 }
