@@ -16,5 +16,4 @@ export function introduction() {
    introSection.appendChild(introFigure);
    introSection.appendChild(introArticle);
    introFigure.appendChild(introImage);
-
 }

@@ -190,7 +190,7 @@ footer nav ul {
 
 /*** Style pour les boutons filtres ****/
 
-.filterButtons {
+.filterBar {
 	display: flex;
 	justify-content: center;
 	padding: 10px 0 40px 0;
@@ -332,11 +332,12 @@ hr {
 .modal1-figure {
     width: 17%;
 	padding: 8px;
+	position: relative;
 }
 
 .modal-images {
     width: 100%;
-	position: relative;
+	
 }
 
 .fa-solid.fa-trash-can {
@@ -347,6 +348,8 @@ hr {
 	color: white;
 	padding: 3px;
 	margin-right: 20px;
+	left: 80px;
+	bottom: 115px;
 }
 
 .cursor {

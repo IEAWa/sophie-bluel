@@ -1,3 +1,4 @@
+import {generateModal} from "./modal.js";
 
 export function indexEdit(){
 let userLoginInfo = window.localStorage.getItem('userData');
@@ -7,13 +8,13 @@ if (userLoginInfo !== null){
  //banner edit
  const bannerEdit = document.createElement('div');
  bannerEdit.classList.add('edit-page-header');
- bannerEdit.innerHTML = '<i class="fa-regular fa-pen-to-square"></i><p>Mode édition</p>';
+ bannerEdit.innerHTML = `<i class="fa-regular fa-pen-to-square"></i><p>Mode édition</p>`;
  const body = document.querySelector('body');
  body.insertAdjacentElement('afterbegin',bannerEdit);
 
 
   //efface le titre et les btn filtres
-  const filterBar = document.querySelector('.filterButtons');
+  const filterBar = document.querySelector('.filterBar');
   filterBar.style.display='none';
   const portfolioH2 = document.querySelector('#portfolio h2');
   portfolioH2.style.display='none';
@@ -23,9 +24,8 @@ if (userLoginInfo !== null){
   portfolioTitleSection.classList.add('center-alignment');
   portfolioTitleSection.innerHTML = `
     <h2>Mes projets </h2>
-    <a href="#modal1" class="js-modal"><i class="fa-regular fa-pen-to-square"></i> modifier </a>`;
-
-
+    <div class="js-modal"><i class="fa-regular fa-pen-to-square"></i> modifier </div>`;
+  
 
   //créé le btn logout
   const logout = document.createElement('li');
@@ -35,7 +35,6 @@ if (userLoginInfo !== null){
   //récuperer notre liste ul et y ajouter logout
   const ul =  document.querySelector('nav ul');
   const listItems = ul.getElementsByTagName('li');
-  console.log(listItems);
   // essaie inserer notre logout
   //recuper le dernier element
   const lastItem = listItems[listItems.length - 1];
@@ -44,6 +43,14 @@ if (userLoginInfo !== null){
   const sectionPortfolio = document.getElementById('portfolio');
   //met le titre & 'modifier' avant le portfolio
   sectionPortfolio.insertAdjacentElement('afterbegin',portfolioTitleSection);
+
+  //générer la modale au click sur 'modifier'
+  const jsModal = document.querySelector('.js-modal');
+    jsModal.addEventListener('click', async() => {
+      const response = await fetch('http://localhost:5678/api/works');
+      let works = await response.json();
+      generateModal(works);
+     });
 
   //supprime le btn login
   const login = document.getElementById('login');
@@ -55,7 +62,4 @@ if (userLoginInfo !== null){
    //reload page
    location.reload();
   });
-}
-}
-
-
+}}

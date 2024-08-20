@@ -3,7 +3,7 @@
 
 const form = document.querySelector('form');
 
-function generateConnection() {
+export function generateConnection() {
     //champ de saisie de l'e-mail
     const labelEmail = document.createElement('label');
     const inputEmail = document.createElement('input');
