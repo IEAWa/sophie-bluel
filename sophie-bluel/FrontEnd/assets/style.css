@@ -163,6 +163,16 @@ margin: auto;
 	border: none;
 	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
 }
+
+#category-select, #form #title {
+    height: 50px;
+	font-size: 1.2em;
+	border: none;
+	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+	width: 100%;
+	margin: 10px 0 25px 0;
+}
+
 #contact label, #connection label {
 	margin: 2em 0 1em 0;
 }
@@ -249,6 +259,12 @@ a {
 	align-items: center;
 	background-color: black;
 	color: white;
+	position: absolute;
+	width: 100%;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
 }
 
 .edit-page-header p {
@@ -299,11 +315,11 @@ a {
 	border-radius: 60px ;
 }
 
-aside button {
+.js-close-modal, .js-close-modal2 {
 	background-color: white;
 	border: none;
 	cursor: pointer;
-	position: relative;
+	position: absolute;
 	left: 600px;
 	font-size: 20px;
 }
@@ -312,26 +328,26 @@ h3{
 	font-family: 'Work Sans';
 	font-weight: 400;
 	font-size: 26px;
-	padding-top: 15px;
+	margin-top: 40px;
 	text-align: center;
 }
 
 hr {
 	border: 1px solid #B3B3B3;
-	margin-left: 80px;
-	margin-right: 80px;
+	margin-left: 70px;
+	margin-right: 70px;
 }
 
 /*Photos de la fêntre modale*/
 .img-container {
-	margin: 40px;
+	margin: 40px 65px;
 	display: flex;
 	flex-wrap: wrap;
 }
 
 .modal1-figure {
-    width: 17%;
-	padding: 8px;
+    width: 18%;
+	padding: 5px;
 	position: relative;
 }
 
@@ -348,10 +364,52 @@ hr {
 	color: white;
 	padding: 3px;
 	margin-right: 20px;
-	left: 80px;
-	bottom: 115px;
+	left: 75px;
+	bottom: 105px;
+}
+
+.js-previous-modal {
+	background-color: white;
+	border: none;
+	cursor: pointer;
+	font-size: 20px;
 }
 
 .cursor {
 	cursor: pointer;
+}
+
+.submit-btn {
+	background-color: grey;
+	padding: 6px;
+}
+
+.modal-files {
+	height: 180px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	margin: 30px 0;
+	background-color: rgb(229, 239, 244);
+	
+}
+.fa-regular.fa-image {
+	color: rgb(196, 200, 208);
+	font-size: 60px;
+	margin: 10px;
+}
+#add-file {
+	background-color: rgb(212, 212, 212);
+	border-radius: 30px;
+	padding: 10px 25px;
+	margin-bottom: 10px;
+	color: rgb(69, 108, 121);
+	font-weight: 600;
+}
+.modal2-form {
+	margin: 0 70px;
+}
+#category, .add-img-title {
+	font-weight: 600;
 }

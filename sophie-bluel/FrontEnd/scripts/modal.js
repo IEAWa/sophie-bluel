@@ -11,35 +11,31 @@ if (window.localStorage.getItem('userData')) {
     token = JSON.parse(window.localStorage.getItem("userData")).token;
 }
 
-    //fonction pour fermer la modale
-    const closeModal = function (event) {
-        event.preventDefault();
-        const firstModal = document.querySelector('.modal');
-        firstModal.remove();
-    }
-
+//fonction pour fermer la modale
+function closeModal() {
+    const Modal = document.querySelector('.modal');
+    Modal.remove();
+}
 
 //fonction pour générer la modale
 export function generateModal(works){
-
     //création de la modal 1
-    let modal = document.createElement('aside');
-    modal.classList.add('modal');
-    modal.innerHTML = `<div class="modal-container1">
-                            <button class="js-close-modal">
-                                <i class="fa-solid fa-xmark"></i>
-                            </button>
-                            <h3>Gallerie photo</h3>
-                        </div>`
-    const main = document.querySelector('main');
-    main.appendChild(modal);
+        let modal = document.createElement('aside');
+        modal.classList.add('modal');
+        modal.innerHTML = `<div class="modal-container1">
+                                <button class="js-close-modal">
+                                    <i class="fa-solid fa-xmark"></i>
+                                </button>
+                                <h3>Gallerie photo</h3>
+                            </div>`
+        const main = document.querySelector('main');
+        main.appendChild(modal);
 
     //création div pour les photos
     const modalContainer = document.querySelector('.modal-container1');
     const imageContainer = document.createElement('div');
     imageContainer.classList.add('img-container');
-    modalContainer.appendChild(imageContainer);
-
+  
 
     //quitter la modale avec le bouton quitter
      modal.querySelector('.js-close-modal').addEventListener('click', closeModal);
@@ -87,7 +83,9 @@ export function generateModal(works){
             document.querySelector(`.gallery #works-${id}`).remove();
             }}
     )})
-}
+} 
+ modalContainer.appendChild(imageContainer);
+
     //bouton-lien 'ajouter une photo' (mène à la modale 'ajout photo')
     const addPhotoSection = document.createElement('div');
     addPhotoSection.innerHTML = `<hr>
@@ -98,30 +96,80 @@ export function generateModal(works){
 
 //ouverture de la modale 'ajout photo' avec le clique sur le btn
     const addPhotoBtn = document.querySelector('.modalBtn');
-    addPhotoBtn.addEventListener('click', function () {
-        generateSecondModal;})
+    addPhotoBtn.addEventListener('click', generateSecondModal);
 }
 
 // Function to go back
 async function goBack() {
     // Retrieve data from the backend
-    const apiWorks = await fetch("http://localhost:5678/api/works");
-    const works = await apiWorks.json();
+    console.log(works)
     closeModal;
     generateModal(works);
   }
-  goBack();
+
+  async function sendImage(e) {
+    e.preventDefault();
+    closeModal;
+  
+    const url = "http://localhost:5678/api/works";
+    // recup valeurs
+    const image = document.getElementById("image").files[0];
+    const title = document.getElementById("title").value;
+    const category = document.getElementById("category-select").value;
+  
+    const formData = new FormData();
+    formData.append("image", image);
+    formData.append("title", title);
+    formData.append("category", category);
+  
+    const requestInfos = {
+      method: "POST",
+      headers: {
+        "accept": "application/json",
+        "Authorization": `Bearer ${token}`
+      },
+      body: formData
+    }
+    try {
+      const response = await fetch(url, requestInfos);
+      const data = await response.json();
+  
+      if (data.hasOwnProperty("title") && data.hasOwnProperty("imageUrl") && data.hasOwnProperty("categoryId")) {
+        alert("Votre image vient d'être ajoutée");
+  
+        let figure = document.createElement("figure");
+        figure.id = `works-${data.id}`;
+        let img = document.createElement("img");
+        img.src = data.imageUrl;
+        let figcaption = document.createElement("figcaption");
+        figcaption.innerHTML = data.title;
+  
+        figure.appendChild(img);
+        figure.appendChild(figcaption);
+  
+        const gallery = document.querySelector(".gallery");
+        gallery.appendChild(figure);
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  }
 
 function generateSecondModal() {
+    event.preventDefault();
     //création de la modale 2
     const modal = document.querySelector('aside');
     const modal1 = document.querySelector('.modal-container1');
     modal1.style.display='none';
     const modalContainer2 = document.createElement('div');
     modalContainer2.classList.add('modal-container2');
-    modalContainer2.innerHTML = `<button class="js-close-modal">
-                                <i class="fa-solid fa-xmark"></i>
-                        </button>`
+    modalContainer2.innerHTML = `<button class="js-previous-modal">
+                                    <i class="fa-solid fa-arrow-left"></i>
+                                </button>
+                                <button class="js-close-modal2">
+                                    <i class="fa-solid fa-xmark"></i>
+                                </button>
+                                <h3>Ajout photo</h3>`
     const main = document.querySelector('main');
     main.appendChild(modal);
     modal.appendChild(modalContainer2);
@@ -130,25 +178,175 @@ function generateSecondModal() {
     form.action = "http://localhost:5678/api/works";
     form.method = "post";
     form.id = "form";
+    form.classList.add("modal2-form");
     form.innerHTML = `
       <div class="modal-files">
         <i class="fa-regular fa-image"></i>
-        <label for="image" id="add-file">+ Ajouter photo</label>
-        <input type="file" name="image" id="image" class="hidden">
+        <label for="image" id="add-file" class="cursor">+ Ajouter photo</label>
+        <input type="file" name="image" id="image" hidden>
         <p>jpg, png : 4mo max</p>
       </div>
-      <label for="title">Titre</label>
+      <label for="title" class="add-img-title">Titre</label><br>
       <input type="text" name="title" id="title" required>
       <p id="too-short"></p>
-      <label for="category" id="category">Catégorie</label>
+      <label for="category" id="category">Catégorie</label><br>
       <select name="category" id="category-select" required>
       <select/>
       <p id="error-message"></p>
-      <div class="modal-btn">
-        <input type="submit" value="Valider" id="submit" class="submit-btn" disabled>
+      <hr>
+      <div class="">
+        <input type="submit" value="Valider" id="submit" class="submit-btn center-alignment cursor" disabled>
       </div>`;
       modalContainer2.appendChild(form);
 
+      // Image preview
+  const image = document.getElementById("image");
+  image.onchange = () => {
+    const file = image.files[0];
+    if (file) {
+      // Validation format type
+      const allowedTypes = ["image/jpeg", "image/png"];
+      const maxSizeInBytes = 4 * 1024 * 1024;
+      if (!allowedTypes.includes(file.type)) {
+        alert("Veuillez sélectionner une image au format JPG ou PNG.")
+        image.value = "";
+        return;
+      }
+      if (file.size > maxSizeInBytes) {
+        alert("La taille de l'image ne doit pas dépasser les 4mo.")
+        image.value = "";
+        return;
+      }
+      
+      //container de l'img preview
+      const imagePreview = document.createElement('img');
+      imagePreview.style.maxWidth = "32%";
+      imagePreview.style.maxHeight = "100%";
+      imagePreview.src = URL.createObjectURL(file);
+      //supprime les éléments de modal-files pour afficher l'img à la place
+      const modalFiles = document.querySelector('.modal-files');
+      const iconFile = document.querySelector('.fa-image');
+      iconFile.style.display = "none";
+      const addFile = document.getElementById('add-file');
+      addFile.style.display = "none";
+      const text = document.querySelector('#form p');
+      text.style.display = "none";
+      modalFiles.style.padding = "0";
+
+      modalFiles.appendChild(imagePreview);
+    }
+  };
+  const formValidation = document.getElementById('form');
+  formValidation.addEventListener("submit", sendImage);
+
+  selectOptions();
+
     //quitter la modale
-    modal.querySelector('.js-close-modal').addEventListener('click', closeModal);
+    modal.querySelector('.js-close-modal2').addEventListener('click', closeModal);
+    //retourner à la modal 'gallerie photo'
+    const returnModal = document.querySelector('.js-previous-modal');
+    returnModal.addEventListener('click', goBack);
+    
+
+    // Check form elements validity
+  let checks = {
+    imageElementIsFilled: false,
+    titleElementIsFilled: false,
+    categoryElementIsFilled: false,
+  };
+  // Check the image
+  const imageElement = document.getElementById("image");
+  imageElement.addEventListener("change", () => {
+    const inputImage = imageElement.files[0];
+    if (inputImage) {
+      checks["imageElementIsFilled"] = true;
+      checkFormValidity(checks);
+    }
+  });
+  // Check the title
+  const titleElement = document.getElementById("title");
+  titleElement.addEventListener("change", () => {
+    const inputTitle = titleElement.value;
+    if (inputTitle.length > 5) {
+      checks["titleElementIsFilled"] = true;
+
+      const tooShort = document.getElementById("too-short");
+      tooShort.style.display = "none";
+    } else {
+      checks["titleElementIsFilled"] = false;
+
+      // print errors when it doesn't work
+      const tooShort = document.getElementById("too-short");
+      tooShort.innerText = "Titre trop court, veuillez écrire plus de 5 lettres!";
+      tooShort.style.color = "red";
+      tooShort.style.marginBottom = "10px";
+    }
+    checkFormValidity(checks);
+  });
+  // Check the category
+  const categoryElement = document.getElementById("category-select");
+  categoryElement.addEventListener("change", () => {
+    const selectCategoryId = parseInt(categoryElement.value);
+    const categoriesID = categories.map((category) => category.id );
+
+    if (categoriesID.includes(selectCategoryId)) {
+      checks["categoryElementIsFilled"] = true;
+    } else {
+      checks["categoryElementIsFilled"] = false;
+    }
+    checkFormValidity(checks);
+  });
 }
+
+
+async function selectOptions() {
+    try {
+      const categorySelect = document.getElementById("category-select");
+      // Clear existing options
+      categorySelect.innerHTML = "";
+  
+      // Empty option
+      const defaultOption = document.createElement("option");
+      defaultOption.value = "";
+      categorySelect.appendChild(defaultOption);
+  
+      // Loop through categories and create options
+      categories.forEach(category => {
+        const categoryOption = document.createElement("option");
+        categoryOption.id = "option";
+        categoryOption.value = category.id;
+        categoryOption.innerText = category.name;
+  
+        categorySelect.appendChild(categoryOption);
+      });
+    } catch (error) {
+      console.error("Error fetching or parsing categories:", error);
+    }
+  }
+
+  
+function checkFormValidity(checks) {
+    const buttonElement = document.getElementById("submit");
+    // Read the keys inside checks
+    if (checks.imageElementIsFilled && checks.titleElementIsFilled && checks.categoryElementIsFilled) {
+      buttonElement.disabled = false;
+      buttonElement.style.backgroundColor = "#1D6154";
+  
+      const selectMargin = document.getElementById("category-select");
+      selectMargin.style.marginBottom = "47px";
+      const errorMessage = document.getElementById("error-message");
+      errorMessage.style.display = "none";
+    } else {
+      buttonElement.disabled = true;
+      buttonElement.style.backgroundColor = "#A7A7A7";
+  
+      // print errors when it doesn't work
+      const categoryMargin = document.getElementById("category-select");
+      categoryMargin.style.marginBottom = "12px";
+      const errorMessage = document.getElementById("error-message");
+      errorMessage.innerText = "Veuillez remplir correctement le formulaire.";
+      errorMessage.style.color = "red";
+      errorMessage.style.marginBottom = "30px";
+      errorMessage.style.display = "block";
+    }
+  }

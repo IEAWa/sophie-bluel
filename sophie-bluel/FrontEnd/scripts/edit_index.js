@@ -10,6 +10,9 @@ if (userLoginInfo !== null){
  bannerEdit.classList.add('edit-page-header');
  bannerEdit.innerHTML = `<i class="fa-regular fa-pen-to-square"></i><p>Mode édition</p>`;
  const body = document.querySelector('body');
+ body.style.marginTop = "80px";
+ body.style.marginLeft = "auto";
+ body.style.marginRight = "auto";
  body.insertAdjacentElement('afterbegin',bannerEdit);
 
 
