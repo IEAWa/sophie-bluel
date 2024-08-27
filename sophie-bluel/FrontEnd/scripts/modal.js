@@ -19,23 +19,33 @@ function closeModal() {
 
 //fonction pour générer la modale
 export function generateModal(works){
-    //création de la modal 1
+    //création de la modale 1
         let modal = document.createElement('aside');
         modal.classList.add('modal');
-        modal.innerHTML = `<div class="modal-container1">
+        let iconCloseModal = document.createElement('button');
+        iconCloseModal.classList.add('js-close-modal');
+        iconCloseModal.innerHTML = `<i class="fa-solid fa-xmark"></i>`
+        let modalContent = document.createElement('div');
+        modalContent.classList.add('modal-container');
+        modalContent.innerHTML= `<h3>Gallerie photo</h3>`;
+        const modalWorks = document.createElement('div');
+        modalWorks.classList.add('img-container');
+
+        /* modal.innerHTML = `<div class="modal-container">
                                 <button class="js-close-modal">
                                     <i class="fa-solid fa-xmark"></i>
                                 </button>
                                 <h3>Gallerie photo</h3>
-                            </div>`
+                            </div>` */
         const main = document.querySelector('main');
         main.appendChild(modal);
+        modal.appendChild(iconCloseModal);
+        modal.appendChild(modalContent);
 
-    //création div pour les photos
+    /* //création div pour les photos
     const modalContainer = document.querySelector('.modal-container1');
     const imageContainer = document.createElement('div');
-    imageContainer.classList.add('img-container');
-  
+    imageContainer.classList.add('img-container'); */
 
     //quitter la modale avec le bouton quitter
      modal.querySelector('.js-close-modal').addEventListener('click', closeModal);
@@ -55,7 +65,7 @@ export function generateModal(works){
         figImage.src = works[i].imageUrl;
         figImage.alt = works[i].title;
         
-        imageContainer.appendChild(figure);
+        modalWorks.appendChild(figure);
         figure.appendChild(figImage)
 
         //icone pour supprimer les photos
@@ -84,7 +94,7 @@ export function generateModal(works){
             }}
     )})
 } 
- modalContainer.appendChild(imageContainer);
+modalContent.appendChild(modalWorks);
 
     //bouton-lien 'ajouter une photo' (mène à la modale 'ajout photo')
     const addPhotoSection = document.createElement('div');
@@ -92,7 +102,7 @@ export function generateModal(works){
             <a href="" class="modalBtn">
                 Ajouter une photo
             </a>`;
-    modalContainer.appendChild(addPhotoSection);
+    modalContent.appendChild(addPhotoSection);
 
 //ouverture de la modale 'ajout photo' avec le clique sur le btn
     const addPhotoBtn = document.querySelector('.modalBtn');
@@ -159,20 +169,15 @@ function generateSecondModal() {
     event.preventDefault();
     //création de la modale 2
     const modal = document.querySelector('aside');
-    const modal1 = document.querySelector('.modal-container1');
-    modal1.style.display='none';
-    const modalContainer2 = document.createElement('div');
-    modalContainer2.classList.add('modal-container2');
-    modalContainer2.innerHTML = `<button class="js-previous-modal">
+    const modalContent = document.querySelector('.modal-container');
+    modalContent.innerHTML= "";
+    modalContent.innerHTML = `<button class="js-previous-modal">
                                     <i class="fa-solid fa-arrow-left"></i>
-                                </button>
-                                <button class="js-close-modal2">
-                                    <i class="fa-solid fa-xmark"></i>
                                 </button>
                                 <h3>Ajout photo</h3>`
     const main = document.querySelector('main');
     main.appendChild(modal);
-    modal.appendChild(modalContainer2);
+    modal.appendChild(modalContent);
     //contenu de la modale
     const form = document.createElement("form");
     form.action = "http://localhost:5678/api/works";
@@ -194,10 +199,10 @@ function generateSecondModal() {
       <select/>
       <p id="error-message"></p>
       <hr>
-      <div class="">
+      <div>
         <input type="submit" value="Valider" id="submit" class="submit-btn center-alignment cursor" disabled>
       </div>`;
-      modalContainer2.appendChild(form);
+      modalContent.appendChild(form);
 
       // Image preview
   const image = document.getElementById("image");
@@ -242,7 +247,7 @@ function generateSecondModal() {
   selectOptions();
 
     //quitter la modale
-    modal.querySelector('.js-close-modal2').addEventListener('click', closeModal);
+    modal.querySelector('.js-close-modal').addEventListener('click', closeModal);
     //retourner à la modal 'gallerie photo'
     const returnModal = document.querySelector('.js-previous-modal');
     returnModal.addEventListener('click', goBack);

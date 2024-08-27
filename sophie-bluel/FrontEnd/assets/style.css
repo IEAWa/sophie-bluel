@@ -284,6 +284,7 @@ a {
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	position: absolute;
 	top: 0;
 	left: 0;
 	width: 100%;
@@ -291,8 +292,7 @@ a {
 	background: rgba(0, 0, 0, 0.4);
 }
 
-.modal-container1, .modal-container2 {
-	position: absolute;
+.modal-container {
 	width: 630px;
 	height: 650px;
 	border-radius: 10px;
@@ -315,12 +315,13 @@ a {
 	border-radius: 60px ;
 }
 
-.js-close-modal, .js-close-modal2 {
+.js-close-modal {
 	background-color: white;
 	border: none;
 	cursor: pointer;
-	position: absolute;
-	left: 600px;
+	position: relative;
+	left: 640px;
+	bottom: 310px;
 	font-size: 20px;
 }
 
