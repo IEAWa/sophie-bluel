@@ -33,6 +33,7 @@ for (let i = 0; i < works.length; i++) {
 let figure = document.createElement('figure');
 let figCaption = document.createElement('figcaption');
 let figImage = document.createElement('img');
+figure.id = `works-${works[i].id}`;
 
 figImage.src = works[i].imageUrl;
 figImage.alt = works[i].title;
@@ -58,7 +59,6 @@ generateWorks(works);
                    const worksObjets =  works.filter((work) => work.category.name === "Objets" );
                    gallery.innerHTML = "";
                    generateWorks(worksObjets);
-                   console.log('Objets test');
                    break;
 
                case "Appartements":

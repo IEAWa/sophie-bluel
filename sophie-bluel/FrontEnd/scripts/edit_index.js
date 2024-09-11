@@ -10,11 +10,8 @@ if (userLoginInfo !== null){
  bannerEdit.classList.add('edit-page-header');
  bannerEdit.innerHTML = `<i class="fa-regular fa-pen-to-square"></i><p>Mode édition</p>`;
  const body = document.querySelector('body');
- body.style.marginTop = "80px";
- body.style.marginLeft = "auto";
- body.style.marginRight = "auto";
+ body.style.margin = "80px auto 0 auto";
  body.insertAdjacentElement('afterbegin',bannerEdit);
-
 
   //efface le titre et les btn filtres
   const filterBar = document.querySelector('.filterBar');
@@ -27,18 +24,18 @@ if (userLoginInfo !== null){
   portfolioTitleSection.classList.add('center-alignment');
   portfolioTitleSection.innerHTML = `
     <h2>Mes projets </h2>
-    <div class="js-modal"><i class="fa-regular fa-pen-to-square"></i> modifier </div>`;
+    <div class="js-modal cursor"><i class="fa-regular fa-pen-to-square"></i> modifier </div>`;
   
-
   //créé le btn logout
   const logout = document.createElement('li');
-  logout.innerText = "logout" ;
-  logout.className = "logout" ;
+  logout.innerText = "logout";
+  logout.className = "logout";
+  logout.classList.add('cursor');
  
   //récuperer notre liste ul et y ajouter logout
   const ul =  document.querySelector('nav ul');
   const listItems = ul.getElementsByTagName('li');
-  // essaie inserer notre logout
+  // inserer le logout
   //recuper le dernier element
   const lastItem = listItems[listItems.length - 1];
   lastItem.insertAdjacentElement('beforebegin',logout);
@@ -59,6 +56,7 @@ if (userLoginInfo !== null){
   const login = document.getElementById('login');
   login.style.display='none';
  
+  //supprime le localstorage au click sur le btn logout
   logout.addEventListener('click', function() {
    //remove localStorage
    window.localStorage.removeItem('userData');

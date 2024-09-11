@@ -284,7 +284,6 @@ a {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	position: absolute;
 	top: 0;
 	left: 0;
 	width: 100%;
@@ -320,8 +319,16 @@ a {
 	border: none;
 	cursor: pointer;
 	position: relative;
-	left: 640px;
-	bottom: 310px;
+	left: 585px;
+	font-size: 20px;
+}
+
+.js-close-modal2 {
+	background-color: white;
+	border: none;
+	cursor: pointer;
+	position: relative;
+	left: 550px;
 	font-size: 20px;
 }
 
@@ -329,7 +336,7 @@ h3{
 	font-family: 'Work Sans';
 	font-weight: 400;
 	font-size: 26px;
-	margin-top: 40px;
+	margin-top: 30px;
 	text-align: center;
 }
 
@@ -341,7 +348,7 @@ hr {
 
 /*Photos de la fêntre modale*/
 .img-container {
-	margin: 40px 65px;
+	margin: 30px 65px 40px 65px;
 	display: flex;
 	flex-wrap: wrap;
 }
@@ -380,8 +387,8 @@ hr {
 	cursor: pointer;
 }
 
-.submit-btn {
-	background-color: grey;
+#submit {
+	background-color: rgb(179, 179, 179);
 	padding: 6px;
 }
 

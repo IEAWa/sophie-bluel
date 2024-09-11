@@ -1,7 +1,6 @@
 // récuperer les données du backend
 const response = await fetch('http://localhost:5678/api/works');
 let works = await response.json();
-
 const apiCategories = await fetch("http://localhost:5678/api/categories");
 const categories = await apiCategories.json();
 
@@ -22,30 +21,16 @@ export function generateModal(works){
     //création de la modale 1
         let modal = document.createElement('aside');
         modal.classList.add('modal');
-        let iconCloseModal = document.createElement('button');
-        iconCloseModal.classList.add('js-close-modal');
-        iconCloseModal.innerHTML = `<i class="fa-solid fa-xmark"></i>`
         let modalContent = document.createElement('div');
         modalContent.classList.add('modal-container');
-        modalContent.innerHTML= `<h3>Gallerie photo</h3>`;
+        modalContent.innerHTML= `<button class="js-close-modal"><i class="fa-solid fa-xmark"></i></button>
+        <h3>Gallerie photo</h3>`;
         const modalWorks = document.createElement('div');
         modalWorks.classList.add('img-container');
 
-        /* modal.innerHTML = `<div class="modal-container">
-                                <button class="js-close-modal">
-                                    <i class="fa-solid fa-xmark"></i>
-                                </button>
-                                <h3>Gallerie photo</h3>
-                            </div>` */
         const main = document.querySelector('main');
         main.appendChild(modal);
-        modal.appendChild(iconCloseModal);
         modal.appendChild(modalContent);
-
-    /* //création div pour les photos
-    const modalContainer = document.querySelector('.modal-container1');
-    const imageContainer = document.createElement('div');
-    imageContainer.classList.add('img-container'); */
 
     //quitter la modale avec le bouton quitter
      modal.querySelector('.js-close-modal').addEventListener('click', closeModal);
@@ -73,11 +58,10 @@ export function generateModal(works){
         deleteIcon.setAttribute('class','fa-solid fa-trash-can');
         deleteIcon.classList.add('cursor');
         figure.appendChild(deleteIcon);       
-    
 
      // supprimer les works
     deleteIcon.addEventListener('click', function (event) {
-        event.preventDefault();
+        //event.preventDefault();
         let id = works[i].id; 
         fetch(`http://localhost:5678/api/works/${id}`, {
             method: "DELETE",
@@ -99,9 +83,9 @@ modalContent.appendChild(modalWorks);
     //bouton-lien 'ajouter une photo' (mène à la modale 'ajout photo')
     const addPhotoSection = document.createElement('div');
     addPhotoSection.innerHTML = `<hr>
-            <a href="" class="modalBtn">
+            <div class="modalBtn">
                 Ajouter une photo
-            </a>`;
+            </div>`;
     modalContent.appendChild(addPhotoSection);
 
 //ouverture de la modale 'ajout photo' avec le clique sur le btn
@@ -109,20 +93,15 @@ modalContent.appendChild(modalWorks);
     addPhotoBtn.addEventListener('click', generateSecondModal);
 }
 
-// Function to go back
+// Fonction go back
 async function goBack() {
-    // Retrieve data from the backend
-    console.log(works)
-    closeModal;
+    closeModal();
     generateModal(works);
   }
 
-  async function sendImage(e) {
-    e.preventDefault();
-    closeModal;
-  
-    const url = "http://localhost:5678/api/works";
-    // recup valeurs
+  async function sendImage(event) {
+    event.preventDefault();
+      // recupérer les valeurs
     const image = document.getElementById("image").files[0];
     const title = document.getElementById("title").value;
     const category = document.getElementById("category-select").value;
@@ -140,15 +119,14 @@ async function goBack() {
       },
       body: formData
     }
-    try {
-      const response = await fetch(url, requestInfos);
+     try {
+      const response = await fetch("http://localhost:5678/api/works", requestInfos);
       const data = await response.json();
   
       if (data.hasOwnProperty("title") && data.hasOwnProperty("imageUrl") && data.hasOwnProperty("categoryId")) {
         alert("Votre image vient d'être ajoutée");
   
         let figure = document.createElement("figure");
-        figure.id = `works-${data.id}`;
         let img = document.createElement("img");
         img.src = data.imageUrl;
         let figcaption = document.createElement("figcaption");
@@ -160,12 +138,12 @@ async function goBack() {
         const gallery = document.querySelector(".gallery");
         gallery.appendChild(figure);
       }
-    } catch (error) {
+    }  catch (error) {
       console.error("Error:", error);
-    }
-  }
+     }
+   }
 
-function generateSecondModal() {
+function generateSecondModal(event) {
     event.preventDefault();
     //création de la modale 2
     const modal = document.querySelector('aside');
@@ -174,6 +152,7 @@ function generateSecondModal() {
     modalContent.innerHTML = `<button class="js-previous-modal">
                                     <i class="fa-solid fa-arrow-left"></i>
                                 </button>
+                                <button class="js-close-modal2"><i class="fa-solid fa-xmark"></i></button>
                                 <h3>Ajout photo</h3>`
     const main = document.querySelector('main');
     main.appendChild(modal);
@@ -247,7 +226,7 @@ function generateSecondModal() {
   selectOptions();
 
     //quitter la modale
-    modal.querySelector('.js-close-modal').addEventListener('click', closeModal);
+    modalContent.querySelector('.js-close-modal2').addEventListener('click', closeModal);
     //retourner à la modal 'gallerie photo'
     const returnModal = document.querySelector('.js-previous-modal');
     returnModal.addEventListener('click', goBack);
@@ -274,7 +253,6 @@ function generateSecondModal() {
     const inputTitle = titleElement.value;
     if (inputTitle.length > 5) {
       checks["titleElementIsFilled"] = true;
-
       const tooShort = document.getElementById("too-short");
       tooShort.style.display = "none";
     } else {
@@ -325,7 +303,7 @@ async function selectOptions() {
         categorySelect.appendChild(categoryOption);
       });
     } catch (error) {
-      console.error("Error fetching or parsing categories:", error);
+      console.error("Error categories:", error);
     }
   }
 
