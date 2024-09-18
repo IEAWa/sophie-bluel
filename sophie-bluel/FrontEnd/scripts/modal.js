@@ -44,6 +44,7 @@ export function generateModal(works){
     //boucle pour ajouter les photos
     for (let i = 0; i < works.length; i++) {
         let figure = document.createElement('figure');
+        figure.id = `works-${works[i].id}`;
         figure.classList.add('modal1-figure');
         let figImage = document.createElement('img');
         figImage.classList.add('modal-images');
@@ -57,7 +58,7 @@ export function generateModal(works){
         let deleteIcon = document.createElement('i');
         deleteIcon.setAttribute('class','fa-solid fa-trash-can');
         deleteIcon.classList.add('cursor');
-        figure.appendChild(deleteIcon);       
+        figure.appendChild(deleteIcon);  
 
      // supprimer les works
     deleteIcon.addEventListener('click', function (event) {
@@ -74,8 +75,10 @@ export function generateModal(works){
     .then(response => { if (response.ok)
             {
             figure.remove();
+            console.log(figure);
             document.querySelector(`.gallery #works-${id}`).remove();
             }}
+            
     )})
 } 
 modalContent.appendChild(modalWorks);
@@ -127,6 +130,7 @@ async function goBack() {
         alert("Votre image vient d'être ajoutée");
   
         let figure = document.createElement("figure");
+        figure.id = `works-${data.id}`;
         let img = document.createElement("img");
         img.src = data.imageUrl;
         let figcaption = document.createElement("figcaption");
