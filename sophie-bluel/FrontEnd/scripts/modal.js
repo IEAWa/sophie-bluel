@@ -75,12 +75,11 @@ export function generateModal(works){
     .then(response => { if (response.ok)
             {
             figure.remove();
-            console.log(figure);
             document.querySelector(`.gallery #works-${id}`).remove();
             }}
             
     )})
-} 
+    } 
 modalContent.appendChild(modalWorks);
 
     //bouton-lien 'ajouter une photo' (mène à la modale 'ajout photo')
@@ -127,7 +126,6 @@ async function goBack() {
       const data = await response.json();
   
       if (data.hasOwnProperty("title") && data.hasOwnProperty("imageUrl") && data.hasOwnProperty("categoryId")) {
-        alert("Votre image vient d'être ajoutée");
   
         let figure = document.createElement("figure");
         figure.id = `works-${data.id}`;
@@ -139,8 +137,12 @@ async function goBack() {
         figure.appendChild(img);
         figure.appendChild(figcaption);
   
+        //ajoute l'image dans la gallerie
         const gallery = document.querySelector(".gallery");
         gallery.appendChild(figure);
+        //ajoute l'image dans la fenêtre modale
+        const modalContainer = document.querySelector(".img-container");
+        modalContainer.appendChild(figure);
       }
     }  catch (error) {
       console.error("Error:", error);
@@ -309,7 +311,7 @@ async function selectOptions() {
     } catch (error) {
       console.error("Error categories:", error);
     }
-  }
+}
 
   
 function checkFormValidity(checks) {
@@ -336,4 +338,4 @@ function checkFormValidity(checks) {
       errorMessage.style.marginBottom = "30px";
       errorMessage.style.display = "block";
     }
-  }
+}

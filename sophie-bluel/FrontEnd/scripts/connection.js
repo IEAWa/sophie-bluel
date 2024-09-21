@@ -3,7 +3,7 @@
 
 const form = document.querySelector('form');
 
-export function generateConnection() {
+function generateConnection() {
     //champ de saisie de l'e-mail
     const labelEmail = document.createElement('label');
     const inputEmail = document.createElement('input');
@@ -52,13 +52,11 @@ export function generateConnection() {
 function loginAuth(){
     form.addEventListener('submit', (event) => {
         event.preventDefault();
-        //Verification des elemets du formulaires
-        // récuperer les données tapées par l'user
+        //récuperer les données tapées par l'user
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
         //transformation en format json
             let formData = JSON.stringify({email:email, password:password});
-        // ???
 
         fetch('http://localhost:5678/api/users/login', {
             method: "POST",
@@ -68,23 +66,20 @@ function loginAuth(){
         //
         .then(response => response.json())
         .then((data) => {
-
+            //Verification des elemets du formulaires
             if(data.hasOwnProperty('userId') && data.hasOwnProperty('token') ) {
                 console.log(data);
                 //créer le localStorage
                 window.localStorage.setItem('userData', JSON.stringify(data));
-                //rediriger user vers la page accueil
+                //rediriger l'utilisateur vers la page accueil
                 window.location = "./index.html";
             }
-
             else {
                 console.log('user not found');
                 const incorrectEntry = document.getElementById('incorrectEntry');
                 incorrectEntry.removeAttribute('style');
             }
-        }
-        )
-        }      
-    )}
-
+        })
+    })
+}
 loginAuth()

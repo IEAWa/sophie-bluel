@@ -78,8 +78,6 @@ generateWorks(works);
                    generateWorks(works);
                    break;
            }
-           }
-       )
-       }
-   )
+        })
+    })
 }
