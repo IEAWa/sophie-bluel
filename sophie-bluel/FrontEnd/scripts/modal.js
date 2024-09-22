@@ -75,7 +75,6 @@ export function generateModal(works){
     .then(response => { if (response.ok)
             {
             figure.remove();
-            document.querySelector(`.gallery #works-${id}`).remove();
             }}
             
     )})
@@ -98,6 +97,8 @@ modalContent.appendChild(modalWorks);
 // Fonction go back
 async function goBack() {
     closeModal();
+    const response = await fetch('http://localhost:5678/api/works');
+    let works = await response.json();
     generateModal(works);
   }
 
@@ -137,12 +138,9 @@ async function goBack() {
         figure.appendChild(img);
         figure.appendChild(figcaption);
   
-        //ajoute l'image dans la gallerie
+        //ajoute l'image dans la gallerie&modale
         const gallery = document.querySelector(".gallery");
         gallery.appendChild(figure);
-        //ajoute l'image dans la fenêtre modale
-        const modalContainer = document.querySelector(".img-container");
-        modalContainer.appendChild(figure);
       }
     }  catch (error) {
       console.error("Error:", error);
