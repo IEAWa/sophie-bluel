@@ -75,6 +75,7 @@ export function generateModal(works){
     .then(response => { if (response.ok)
             {
             figure.remove();
+            document.querySelector(`.gallery #works-${id}`).remove();
             }}
             
     )})
