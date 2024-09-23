@@ -66,11 +66,11 @@ function loginAuth(){
         //
         .then(response => response.json())
         .then((data) => {
-            //Verification des elemets du formulaires
+            //Verification des elemets du formulaire
             if(data.hasOwnProperty('userId') && data.hasOwnProperty('token') ) {
                 console.log(data);
                 //créer le localStorage
-                window.localStorage.setItem('userData', JSON.stringify(data));
+                localStorage.setItem('userData', JSON.stringify(data));
                 //rediriger l'utilisateur vers la page accueil
                 window.location = "./index.html";
             }
@@ -80,6 +80,6 @@ function loginAuth(){
                 incorrectEntry.removeAttribute('style');
             }
         })
-    })
-}
+        .catch ((error) => {console.error(error)});
+})}
 loginAuth()

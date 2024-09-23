@@ -1,10 +1,10 @@
 import {generateModal} from "./modal.js";
 
 export function indexEdit(){
-let userLoginInfo = window.localStorage.getItem('userData');
+let userLoginInfo = localStorage.getItem('userData');
 console.log(userLoginInfo)
 
-if (userLoginInfo !== null){
+if (userLoginInfo){
  //banner edit
  const bannerEdit = document.createElement('div');
  bannerEdit.classList.add('edit-page-header');
@@ -59,7 +59,7 @@ if (userLoginInfo !== null){
   //supprime le localstorage au click sur le btn logout
   logout.addEventListener('click', function() {
    //remove localStorage
-   window.localStorage.removeItem('userData');
+   localStorage.removeItem('userData');
    //reload page
    location.reload();
   });

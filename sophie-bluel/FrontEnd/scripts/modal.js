@@ -1,4 +1,4 @@
-// récuperer les données du backend
+// récuperer les données de l'API
 const response = await fetch('http://localhost:5678/api/works');
 let works = await response.json();
 const apiCategories = await fetch("http://localhost:5678/api/categories");
@@ -6,8 +6,8 @@ const categories = await apiCategories.json();
 
 //récuperer le token
 let token;
-if (window.localStorage.getItem('userData')) {
-    token = JSON.parse(window.localStorage.getItem("userData")).token;
+if (localStorage.getItem('userData')) {
+    token = JSON.parse(localStorage.getItem("userData")).token;
 }
 
 //fonction pour fermer la modale
@@ -62,23 +62,23 @@ export function generateModal(works){
 
      // supprimer les works
     deleteIcon.addEventListener('click', function (event) {
-        //event.preventDefault();
-        let id = works[i].id; 
-        fetch(`http://localhost:5678/api/works/${id}`, {
-            method: "DELETE",
-            headers: {"Content-Type": "application/json",
-                    "accept": "",
-                    "Authorization": `Bearer ${token}`
+    let id = works[i].id; 
+    fetch(`http://localhost:5678/api/works/${id}`, {
+        method: "DELETE",
+        headers: {"Content-Type": "application/json",
+                "accept": "",
+                "Authorization": `Bearer ${token}`
                 }
-            },
-        )
+    })
     .then(response => { if (response.ok)
             {
             figure.remove();
             document.querySelector(`.gallery #works-${id}`).remove();
+             closeModal();
             }}
-            
-    )})
+    )
+    .catch ((error) => {console.error(error)});
+    })
     } 
 modalContent.appendChild(modalWorks);
 
@@ -103,7 +103,7 @@ async function goBack() {
     generateModal(works);
   }
 
-  async function sendImage(event) {
+async function sendImage(event) {
     event.preventDefault();
       // recupérer les valeurs
     const image = document.getElementById("image").files[0];
@@ -146,7 +146,7 @@ async function goBack() {
     }  catch (error) {
       console.error("Error:", error);
      }
-   }
+}
 
 function generateSecondModal(event) {
     event.preventDefault();
