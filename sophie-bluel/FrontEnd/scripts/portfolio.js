@@ -28,21 +28,22 @@ portfolioGallery.classList.add('gallery');
 portfolioSection.appendChild(portfolioGallery);
 
 //création du contenu du portfolio
-export function generateWorks(works){
-for (let i = 0; i < works.length; i++) {
-let figure = document.createElement('figure');
-let figCaption = document.createElement('figcaption');
-let figImage = document.createElement('img');
-figure.id = `works-${works[i].id}`;
+function generateWorks(works){
+    for (let i = 0; i < works.length; i++) {
+    let figure = document.createElement('figure');
+    let figCaption = document.createElement('figcaption');
+    let figImage = document.createElement('img');
+    figure.id = `works-${works[i].id}`;
 
-figImage.src = works[i].imageUrl;
-figImage.alt = works[i].title;
-figCaption.innerHTML = works[i].title;
+    figImage.src = works[i].imageUrl;
+    figImage.alt = works[i].title;
+    figCaption.innerHTML = works[i].title;
 
-portfolioGallery.appendChild(figure);
-figure.appendChild(figImage);
-figure.appendChild(figCaption);
-};}
+    portfolioGallery.appendChild(figure);
+    figure.appendChild(figImage);
+    figure.appendChild(figCaption);
+    };
+}
 
 export function generatePortfolio(works){
 

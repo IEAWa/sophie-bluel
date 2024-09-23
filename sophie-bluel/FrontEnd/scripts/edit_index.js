@@ -25,7 +25,11 @@ if (userLoginInfo !== null){
   portfolioTitleSection.innerHTML = `
     <h2>Mes projets </h2>
     <div class="js-modal cursor"><i class="fa-regular fa-pen-to-square"></i> modifier </div>`;
-  
+
+  //met le titre & 'modifier' avant le portfolio
+  const sectionPortfolio = document.getElementById('portfolio');
+  sectionPortfolio.insertAdjacentElement('afterbegin',portfolioTitleSection);
+
   //créé le btn logout
   const logout = document.createElement('li');
   logout.innerText = "logout";
@@ -40,9 +44,9 @@ if (userLoginInfo !== null){
   const lastItem = listItems[listItems.length - 1];
   lastItem.insertAdjacentElement('beforebegin',logout);
 
-  const sectionPortfolio = document.getElementById('portfolio');
-  //met le titre & 'modifier' avant le portfolio
-  sectionPortfolio.insertAdjacentElement('afterbegin',portfolioTitleSection);
+  //supprime le btn login
+  const login = document.getElementById('login');
+  login.style.display='none';
 
   //générer la modale au click sur 'modifier'
   const jsModal = document.querySelector('.js-modal');
@@ -52,10 +56,6 @@ if (userLoginInfo !== null){
       generateModal(works);
      });
 
-  //supprime le btn login
-  const login = document.getElementById('login');
-  login.style.display='none';
- 
   //supprime le localstorage au click sur le btn logout
   logout.addEventListener('click', function() {
    //remove localStorage
